@@ -6,7 +6,7 @@
     "node": "8.9.1"
   },
   "scripts": {
-    "preinstall": "cd client && npm install && npm build",
+    "preinstall": "cd client && npm install && npm run build",
     "start": "node ./bin/www"
   },
   "dependencies": {
