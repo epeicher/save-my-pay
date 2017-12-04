@@ -13,8 +13,8 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120,
-    width: '200px'
+    minWidth: 240,
+    width: 200
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
@@ -24,15 +24,23 @@ const styles = theme => ({
 class CategoriesContainer extends Component {
   state = { parentCategory: null, subCategory: null };
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+  handleParentCategoryChange = event => {
+    this.setState({ parentCategory: event.target.value });
+  };
+
+  handleSubCategoryChange = event => {
+    const optionSelected = event.target.options[event.target.selectedIndex];
+    this.setState({
+      parentCategory: optionSelected.dataset.parentId,
+      subCategory: event.target.value
+    });
   };
 
   getOptionGroupComponent(key, label, options) {
     return (
       <optgroup key={key} label={label}>
         {options.map(o => (
-          <option key={o} value={o}>
+          <option key={o} data-parent-id={key} value={o}>
             {o}
           </option>
         ))}
@@ -41,10 +49,11 @@ class CategoriesContainer extends Component {
   }
 
   renderOptionGroups() {
-    if (!this.state.parentCategory)
+    if (!this.state.parentCategory) {
       return Object.keys(subCategories).map(c =>
         this.getOptionGroupComponent(c, categories[c].value, subCategories[c])
       );
+    }
     const c = this.state.parentCategory;
     return this.getOptionGroupComponent(
       c,
@@ -54,7 +63,7 @@ class CategoriesContainer extends Component {
   }
 
   getCategoryFromState = () => {
-    if (this.state.parentCategory === null) return;
+    if (!this.state.parentCategory) return;
     return categories[this.state.parentCategory].value;
   };
 
@@ -67,7 +76,7 @@ class CategoriesContainer extends Component {
           <Select
             native
             value={this.state.parentCategory || ''}
-            onChange={this.handleChange('parentCategory')}
+            onChange={this.handleParentCategoryChange}
             input={<Input id="parent-category" />}
           >
             <option value="" />
@@ -83,7 +92,7 @@ class CategoriesContainer extends Component {
           <Select
             native
             value={this.state.subCategory || ''}
-            onChange={this.handleChange('subCategory')}
+            onChange={this.handleSubCategoryChange}
             input={<Input id="sub-category" />}
           >
             <option value="" />

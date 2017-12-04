@@ -50,14 +50,15 @@ export { categories };
 
 const subCategories = {
   1: [
-    'Salud, saber y deporte',
-    'Vivienda y vehículo',
-    'Seguros',
-    'Servicios típicos',
-    'Ocio y transporte',
-    'Compras',
-    'Bancos y organismos',
-    'Gastos varios'
+    'Farmacia',
+    'Belleza',
+    'Óptica y dentista',
+    'Médico',
+    'Deporte',
+    'Estudios',
+    'Asociaciones',
+    'Solidaridad',
+    'Otros salud, saber y deporte'
   ],
   2: [
     'Alquiler y compra',
