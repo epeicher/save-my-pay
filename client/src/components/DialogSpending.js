@@ -1,13 +1,15 @@
-import React from "react";
-import Button from "material-ui/Button";
-import TextField from "material-ui/TextField";
+import React from 'react';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 import Dialog, {
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   withMobileDialog
-} from "material-ui/Dialog";
+} from 'material-ui/Dialog';
+import CategoriesAutoSuggest from './CategoriesAutoSuggest';
+import CategoriesContainer from './CategoriesContainer';
 
 const DialogSpending = class extends React.Component {
   render() {
@@ -21,12 +23,14 @@ const DialogSpending = class extends React.Component {
             To subscribe to this website, please enter your email address here.
             We will send updates occationally.
           </DialogContentText>
+          <CategoriesContainer />
+
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
-            type="email"
+            label="Cantidad"
+            type="number"
             fullWidth
           />
         </DialogContent>
