@@ -1,31 +1,63 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
 import Dialog, {
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   withMobileDialog
 } from 'material-ui/Dialog';
-import CategoriesAutoSuggest from './CategoriesAutoSuggest';
 import CategoriesContainer from './CategoriesContainer';
+import DateTimePayment from './DateTimePayment';
+
+const styles = theme => ({
+  amountField: {
+    textAlign: 'right'
+  }
+});
 
 const DialogSpending = class extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
+  state = {
+    timestamp: new Date(),
+    parentCategory: null,
+    subCategory: null,
+    amount: null
+  };
+
+  handleChange = name => value => {
+    this.setState(st => ({ ...st, [name]: value }));
+  };
+
+  handleSpendingAdded = () => {
+    this.props.onSpendingAdded(this.state);
+  };
+
   render() {
-    const { open, onRequestClose, onSpendingAdded } = this.props;
+    const { classes, open, onRequestClose } = this.props;
 
     return (
       <Dialog open={open} onRequestClose={onRequestClose}>
         <DialogTitle>Gasto</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occationally.
-          </DialogContentText>
-          <CategoriesContainer />
-
+          <DateTimePayment
+            onTimestampChanged={this.handleChange('timestamp')}
+            value={this.state.timestamp}
+          />
+          <CategoriesContainer
+            onParentCategoryChanged={this.handleChange('parentCategory')}
+            parentCategory={this.state.parentCategory}
+            onSubCategoryChanged={this.handleChange('subCategory')}
+            subCategory={this.state.subCategory}
+          />
           <TextField
+            InputProps={{ classes: { input: classes.amountField } }}
+            onChange={e => this.handleChange('amount')(e.target.value)}
             autoFocus
             margin="dense"
             id="name"
@@ -36,10 +68,10 @@ const DialogSpending = class extends React.Component {
         </DialogContent>
         <DialogActions>
           <Button onClick={onRequestClose} color="primary">
-            Cancel
+            Cancelar
           </Button>
-          <Button onClick={onSpendingAdded} color="primary">
-            Subscribe
+          <Button onClick={this.handleSpendingAdded} color="primary">
+            Guardar
           </Button>
         </DialogActions>
       </Dialog>
@@ -47,4 +79,4 @@ const DialogSpending = class extends React.Component {
   }
 };
 
-export default withMobileDialog()(DialogSpending);
+export default withMobileDialog()(withStyles(styles)(DialogSpending));

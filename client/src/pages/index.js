@@ -1,17 +1,18 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Button from "material-ui/Button";
-import AddIcon from "material-ui-icons/Add";
-import Typography from "material-ui/Typography";
-import { withStyles } from "material-ui/styles";
-import withRoot from "../components/withRoot";
-import DialogSpending from "../components/DialogSpending";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import withRoot from '../components/withRoot';
+import DialogSpending from '../components/DialogSpending';
+import * as api from '../api';
 
 const styles = {
   root: {
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: 200
   }
 };
@@ -25,8 +26,8 @@ class Index extends Component {
     this.closeDialog();
   };
 
-  handleSpendingAdded = () => {
-    this.closeDialog();
+  handleSpendingAdded = payment => {
+    api.addSpending(payment).then(() => this.closeDialog());
   };
 
   closeDialog() {
