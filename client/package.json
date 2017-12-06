@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "autosuggest-highlight": "^3.1.1",
+    "axios": "^0.17.1",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",
     "material-ui": "next",
@@ -22,5 +23,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {}
+  "proxy": "http://localhost:3001"
 }

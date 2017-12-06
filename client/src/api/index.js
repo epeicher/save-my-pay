@@ -1,4 +1,10 @@
+import axios from 'axios';
+
 export function addSpending(spending) {
-  console.log(JSON.stringify(spending));
-  return Promise.resolve('added');
+  return axios
+    .post('/api/payments', spending)
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(e => console.error(e));
 }

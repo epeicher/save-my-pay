@@ -11,6 +11,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import CategoriesContainer from './CategoriesContainer';
 import DateTimePayment from './DateTimePayment';
+import { categories } from '../components/Categories';
 
 const styles = theme => ({
   amountField: {
@@ -35,8 +36,12 @@ const DialogSpending = class extends React.Component {
   };
 
   handleSpendingAdded = () => {
-    this.props.onSpendingAdded(this.state);
+    this.props.onSpendingAdded(this.buildPayload(this.state));
   };
+
+  buildPayload(st) {
+    return { ...st, parentCategory: categories[st.parentCategory].value };
+  }
 
   render() {
     const { classes, open, onRequestClose } = this.props;
