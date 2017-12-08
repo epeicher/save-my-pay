@@ -1,8 +1,7 @@
 var Dropbox = require('dropbox');
+
 var dbx = new Dropbox({
-  accessToken:
-    process.env.DROPBOX_TOKEN ||
-    'VpSsP5FvOOoAAAAAAACElytUU6BR3nYDfNgIPwOXiggSM76ZZOsF5TmRwHKTxMBb'
+  accessToken: process.env.DROPBOX_TOKEN
 });
 
 function addPayment(newRow) {
@@ -18,8 +17,7 @@ function addPayment(newRow) {
         contents: file.data + newRow
       })
     )
-    .then(r => console.log('Successfully added'))
-    .catch(e => console.error(e));
+    .then(r => console.log('Successfully added'));
 }
 
 exports.addPayment = addPayment;

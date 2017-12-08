@@ -27,12 +27,21 @@ class Index extends Component {
   };
 
   handleSpendingAdded = payment => {
-    api.addSpending(payment).then(() => this.closeDialog());
+    api
+      .addSpending(payment)
+      .then(() => this.closeDialog())
+      .catch(e => {
+        const errorMsgs = e.Errors || ['Error desconocido'];
+        this.setState(st => {
+          return { ...st, errors: errorMsgs };
+        });
+      });
   };
 
   closeDialog() {
     this.setState({
-      open: false
+      open: false,
+      errors: undefined
     });
   }
 
@@ -49,6 +58,7 @@ class Index extends Component {
           onRequestClose={this.handleRequestClose}
           onSpendingAdded={this.handleSpendingAdded}
           open={this.state.open}
+          errors={this.state.errors}
         />
         <Typography type="display1" gutterBottom>
           Añade tu Gasto

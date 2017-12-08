@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Dialog, {
@@ -40,7 +41,9 @@ const DialogSpending = class extends React.Component {
   };
 
   buildPayload(st) {
-    return { ...st, parentCategory: categories[st.parentCategory].value };
+    const parentCategoryDsc =
+      st.parentCategory && categories[st.parentCategory].value;
+    return { ...st, parentCategory: parentCategoryDsc };
   }
 
   render() {
@@ -70,6 +73,11 @@ const DialogSpending = class extends React.Component {
             type="number"
             fullWidth
           />
+          {this.props.errors ? (
+            <Typography type="caption" color="error">
+              {this.props.errors.map((e, idx) => <div key={idx}>{e}</div>)}
+            </Typography>
+          ) : null}
         </DialogContent>
         <DialogActions>
           <Button onClick={onRequestClose} color="primary">

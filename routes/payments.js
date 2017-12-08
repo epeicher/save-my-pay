@@ -10,16 +10,15 @@ router.post('/', function(req, res, next) {
 
   const errors = validateRequest(req.body);
 
-  if (errors.length !== 0) return res.status(400).send(errors.join('\n'));
+  if (errors.length !== 0) return res.status(400).send(JSON.stringify(errors));
 
   const csvRow = encodeRequest(req.body);
 
   if (!csvRow) return res.status(400).send('Invalid request');
 
-  console.log('about to add', csvRow);
   encodeRequest(req.body)
     .then(r => dropboxApi.addPayment(r))
-    .then(x => res.send('respond with a resource'))
+    .then(x => res.status(204).end())
     .catch(e => res.status(500).send(e));
 });
 
